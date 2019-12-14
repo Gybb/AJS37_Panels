@@ -6,6 +6,7 @@
 //*******************  PANELKORT   ****************************/
 /*LAND/SJÖ på pin 8*/
 DcsBios::Switch2Pos dopplerLandSeaMode("DOPPLER_LAND_SEA_MODE", 8);
+//Need more coding,LAND/SJÖ does not work as a toggle switch in DCS
 /*RR TILL på pin 7*/
 DcsBios::Switch2Pos radarIgnitionCoils("RADAR_IGNITION_COILS", 7);
 /*LIN/LOG på pin 6*/
