@@ -7,7 +7,7 @@
 /*LAND/SJÖ på pin 8*/
 DcsBios::Switch2Pos dopplerLandSeaMode("DOPPLER_LAND_SEA_MODE", 8);
 /*RR TILL på pin 7*/
-
+DcsBios::Switch2Pos radarIgnitionCoils("RADAR_IGNITION_COILS", 7);
 /*LIN/LOG på pin 6*/
 DcsBios::Switch2Pos radarGain("RADAR_GAIN", 6);
 // PIN 5 for PWM LED
