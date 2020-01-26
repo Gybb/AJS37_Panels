@@ -42,7 +42,7 @@ DcsBios::AnalogMultiPos datapanelSelector("DATAPANEL_SELECTOR", A7, 6, (1023/6))
 //*******************  SLUT DATAPANEL  ************************/
 void setup() {
   DcsBios::setup();
-  //pinMode(PanelLight_pin, OUTPUT);
+
 }
 /*
 void onMainElectricPowerChange(unsigned int newValue) {
