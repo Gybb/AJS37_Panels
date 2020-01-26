@@ -27,7 +27,6 @@ DcsBios::AnalogMultiPos antiJamMode("ANTI_JAM_MODE", A6, 7, (1023/7));
 
 void setup() {
   DcsBios::setup();
-//pinMode(PanelLight_pin, OUTPUT);
 }
 /*
 void onMainElectricPowerChange(unsigned int newValue) {
