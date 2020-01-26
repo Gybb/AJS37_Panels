@@ -6,7 +6,7 @@
 #define TXENABLE_PIN 2
 #include <DcsBios.h>
 #include <LedControl.h>
-bool power_is_on;
+bool power_is_on=false;
 //pin 12 is connected to LOAD
 //pin 11 is connected to the CLK 
 //pin 10 is connected to the DataIn 
@@ -58,7 +58,7 @@ void onMainElectricPowerChange(unsigned int newValue) {
       lc.clearDisplay(0);     //clear the display and get ready for new data
     }
     else {
-    lc.shutdown(0,true);   //turn on the display
+    lc.shutdown(0,true);   // DONT turn on the display
     }
     power_is_on = newValue;
 }
