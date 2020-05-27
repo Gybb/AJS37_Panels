@@ -3,7 +3,7 @@
 #define DCSBIOS_RS485_SLAVE 3
 #define TXENABLE_PIN 2
 #include "DcsBios.h"
-int StartSolenoid_pin = 5;
+const int StartSolenoid_pin = 5;
 int Sol_Value;
 int RPM_Less40;
 bool power_is_on;
@@ -33,9 +33,12 @@ DcsBios::Potentiometer autoYawTrim("AUTO_YAW_TRIM", A7);
 //RENFLYGN DOES NOT WORK, DONT KNOW WHY, STRANGE SYNTAX IN CLICKABLE.LUA
 //*******************  SLUT STARTPANEL  ***********************/
 
+unsigned int g_iInitIntervalCounter = 0;
+unsigned int g_iForcePollCycles = 10;
+
 void setup() {
   DcsBios::setup();
-  
+
 // Solenoid for start switch, makes sure it only work when it should
 pinMode(StartSolenoid_pin, OUTPUT);
 }
@@ -73,5 +76,26 @@ DcsBios::IntegerBuffer startSolBuffer(0x469e, 0x0001, 0, onStartSolChange);
 
 void loop() {
     DcsBios::loop();
+   if ( g_iForcePollCycles > 0 )
+    { 
+        //repeat poll for this many cycles
+        if ( ++g_iInitIntervalCounter == 0 ) 
+        {  PollAllControls();     //main loop 1->65535->0 then polls
+           g_iForcePollCycles--;
+        }
+       
+    }
 
+}
+
+void PollAllControls()
+{
+    mainElectricPower.pollInputCurrent();
+    lowPresFuelValve.pollInputCurrent();
+    ignitionSystem.pollInputCurrent();
+    generator.pollInputCurrent();
+    startSystem.pollInputCurrent();
+    restart.pollInputCurrent();
+    canopyJettison.pollInputCurrent();
+ 
 }
