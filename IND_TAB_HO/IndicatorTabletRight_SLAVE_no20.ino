@@ -2,6 +2,8 @@
 // AJS37 Viggen
 // Code modified by outbaxx from [FSF]Ian´s A-10 CLP
 
+//#define DCSBIOS_IRQ_SERIAL
+//#define DCSBIOS_DEFAULT_SERIAL
 #define DCSBIOS_RS485_SLAVE 20
 #define TXENABLE_PIN 2
 #include <DcsBios.h>
