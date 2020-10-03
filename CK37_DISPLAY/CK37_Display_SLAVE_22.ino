@@ -5,6 +5,8 @@
 #include <U8g2lib.h>
 #include <SPI.h>
 
+//#define DCSBIOS_IRQ_SERIAL
+//#define DCSBIOS_DEFAULT_SERIAL
 #define DCSBIOS_RS485_SLAVE 22
 #define TXENABLE_PIN 2
 #include "DcsBios.h"
