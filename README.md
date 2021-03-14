@@ -7,6 +7,7 @@ The following panels/parts are planned to be included:
 -Datapanel  
 -Datadisplay
 -Navigationdisplay
+-Weapons panel
 -Left indicator panel  
 -Right indicator panel  
 -Destination indicator  
