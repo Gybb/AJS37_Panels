@@ -5,7 +5,8 @@ The following panels/parts are planned to be included:
 -Startpanel  
 -Radarpanel  
 -Datapanel  
--Datadisplay  
+-Datadisplay
+-Navigationdisplay
 -Left indicator panel  
 -Right indicator panel  
 -Destination indicator  
