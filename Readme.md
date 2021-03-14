@@ -5,11 +5,11 @@ The following panels/parts are planned to be included:
 -Startpanel  
 -Radarpanel  
 -Datapanel  
--Datadisplay
--Navigationdisplay
--Weapons panel
+-Datadisplay  
+-Navigationdisplay  
+-Weapons panel  
 -Left indicator panel  
--Right indicator panel  
+-Right indicator panel   
 -Destination indicator  
 -Afterburner zone indicator  
 -Autopilot panel
