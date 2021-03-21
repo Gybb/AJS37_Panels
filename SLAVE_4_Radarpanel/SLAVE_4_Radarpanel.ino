@@ -33,13 +33,13 @@ void onMainElectricPowerChange(unsigned int newValue) {
     if (newValue==0){
       PanelLed_Value = 0; }
 }
-DcsBios::IntegerBuffer mainElectricPowerBuffer(0x4650, 0x0008, 3, onMainElectricPowerChange);
+DcsBios::IntegerBuffer mainElectricPowerBuffer(0x4606, 0x0010, 4, onMainElectricPowerChange);
   
 void onPanelLightsChange(unsigned int newValue) {
       PanelLed_Value = map(newValue, 0, 65535, 0, 200);
      analogWrite(PanelLight_pin, PanelLed_Value);
 }
-DcsBios::IntegerBuffer panelLightsBuffer(0x464c, 0xffff, 0, onPanelLightsChange);
+DcsBios::IntegerBuffer panelLightsBuffer(0x4678, 0xffff, 0, onPanelLightsChange);
 
 
 
