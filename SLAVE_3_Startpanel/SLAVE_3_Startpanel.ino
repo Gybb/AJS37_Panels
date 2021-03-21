@@ -15,7 +15,7 @@ bool LTkran_is_on;
 //*******************  STARTPANEL  ****************************/
 //******************* 9 PINNAR ********************************/
 /* LT-KRAN LAMPA på pin 13*/
-DcsBios::LED ltKranLamp(0x4648, 0x4000, 13);
+DcsBios::LED ltKranLamp(0x4606, 0x0800, 13);
 /*HUVUDSTRÖM på pin 12*/
 DcsBios::Switch2Pos mainElectricPower("MAIN_ELECTRIC_POWER", 12);
 /*LT-KRAN på pin 11*/
@@ -55,22 +55,22 @@ void updateSolenoid(unsigned int Solenoid_pin, unsigned int Cpt_value){
 void onMainElectricPowerChange(unsigned int newValue) {
     power_is_on = newValue;
 }
-DcsBios::IntegerBuffer mainElectricPowerBuffer(0x4650, 0x0008, 3, onMainElectricPowerChange);
+DcsBios::IntegerBuffer mainElectricPowerBuffer(0x4606, 0x0010, 4, onMainElectricPowerChange);
 
 void onLowPresFuelValveChange(unsigned int newValue) {
    LTkran_is_on = newValue;
 }
-DcsBios::IntegerBuffer lowPresFuelValveBuffer(0x4648, 0x2000, 13, onLowPresFuelValveChange);
+DcsBios::IntegerBuffer lowPresFuelValveBuffer(0x4606, 0x0020, 5, onLowPresFuelValveChange);
 
 void onEngineRpm100Change(unsigned int RPM100Value) {
     RPM_Less40 = RPM100Value;
 }
-DcsBios::IntegerBuffer engineRpm100Buffer(0x460e, 0xffff, 0, onEngineRpm100Change);
+DcsBios::IntegerBuffer engineRpm100Buffer(0x4652, 0xffff, 0, onEngineRpm100Change);
 
 void onStartSolChange(unsigned int Cpt_Value) {
    updateSolenoid(StartSolenoid_pin, Cpt_Value);
 }
-DcsBios::IntegerBuffer startSolBuffer(0x4648, 0x08000, 15, onStartSolChange);
+DcsBios::IntegerBuffer startSolBuffer(0x4606, 0x0100, 15, onStartSolChange);
 
 
 
