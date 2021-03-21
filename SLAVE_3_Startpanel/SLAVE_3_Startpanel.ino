@@ -70,7 +70,7 @@ DcsBios::IntegerBuffer engineRpm100Buffer(0x4652, 0xffff, 0, onEngineRpm100Chang
 void onStartSolChange(unsigned int Cpt_Value) {
    updateSolenoid(StartSolenoid_pin, Cpt_Value);
 }
-DcsBios::IntegerBuffer startSolBuffer(0x4606, 0x0100, 15, onStartSolChange);
+DcsBios::IntegerBuffer startSolBuffer(0x4606, 0x0100, 8, onStartSolChange);
 
 
 
