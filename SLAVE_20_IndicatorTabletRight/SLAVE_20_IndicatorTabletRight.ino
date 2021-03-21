@@ -53,7 +53,7 @@ void setup() {
 }
   
 void updateIndicatorTabletRight(unsigned int address, unsigned int data) {
-    unsigned char it_row = (address - 0x4670) * 2;
+    unsigned char it_row = (address - 0x4604) * 2;
     unsigned char start_index = it_row * 4;
     unsigned char column = 0;
     unsigned char i;
@@ -79,14 +79,14 @@ void updateIndicatorTabletRight(unsigned int address, unsigned int data) {
 
 //Läs Höger Indikeringstablå
 void onIndTabRData1Change(unsigned int newValue) {
-    updateIndicatorTabletRight(0x466e, newValue);
+    updateIndicatorTabletRight(0x4604, newValue);
 }
-DcsBios::IntegerBuffer IndTabRData1(0x466e, 0xffff, 0, onIndTabRData1Change);
+DcsBios::IntegerBuffer IndTabRData1(0x4604, 0xffff, 0, onIndTabRData1Change);
 
 void onIndTabRData2Change(unsigned int newValue) {
-    updateIndicatorTabletRight(0x4670, newValue);
+    updateIndicatorTabletRight(0x4606, newValue);
 }
-DcsBios::IntegerBuffer IndTabRData2(0x4670, 0xffff, 0, onIndTabRData2Change);
+DcsBios::IntegerBuffer IndTabRData2(0x4606, 0xffff, 0, onIndTabRData2Change);
 
 void loop() {
   DcsBios::loop();
