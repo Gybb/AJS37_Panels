@@ -59,14 +59,14 @@ void onDatadisplay1to3Change(char* newValue) {
   display1.drawStr(-10,45,newValue);
   display1.sendBuffer();
 }
-DcsBios::StringBuffer<3> datadisplay1to3Buffer(0x46a0, onDatadisplay1to3Change);
+DcsBios::StringBuffer<3> datadisplay1to3Buffer(0x46be, onDatadisplay1to3Change);
 
 void onDatadisplay4to6Change(char* newValue) {
   display2.clearBuffer();  
   display2.drawStr(-10,45,newValue);
   display2.sendBuffer();
 }
-DcsBios::StringBuffer<3> datadisplay4to6Buffer(0x46a4, onDatadisplay4to6Change);
+DcsBios::StringBuffer<3> datadisplay4to6Buffer(0x46c2, onDatadisplay4to6Change);
 
 
 void loop(){
