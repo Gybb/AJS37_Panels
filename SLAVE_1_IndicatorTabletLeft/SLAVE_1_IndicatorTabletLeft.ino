@@ -54,7 +54,7 @@ void setup() {
 
   
 void updateIndicatorTabletLeft(unsigned int address, unsigned int data) {
-    unsigned char it_row = (address - 0x466a) * 2;
+    unsigned char it_row = (address - 0x4600) * 2;
     unsigned char start_index = it_row * 4;
     unsigned char column = 0;
     unsigned char i;
@@ -80,14 +80,14 @@ void updateIndicatorTabletLeft(unsigned int address, unsigned int data) {
 
 //Read Left Indicator tablet
 void onIndTabLData1Change(unsigned int newValue) {
-    updateIndicatorTabletLeft(0x466a, newValue);
+    updateIndicatorTabletLeft(0x4600, newValue);
 }
-DcsBios::IntegerBuffer IndTabLData1(0x466a, 0xffff, 0, onIndTabLData1Change);
+DcsBios::IntegerBuffer IndTabLData1(0x4600, 0xffff, 0, onIndTabLData1Change);
 
 void onIndTabLData2Change(unsigned int newValue) {
-    updateIndicatorTabletLeft(0x466c, newValue);
+    updateIndicatorTabletLeft(0x4602, newValue);
 }
-DcsBios::IntegerBuffer IndTabLData2(0x466c, 0xffff, 0, onIndTabLData2Change);
+DcsBios::IntegerBuffer IndTabLData2(0x4602, 0xffff, 0, onIndTabLData2Change);
 
 void loop() {
   DcsBios::loop();
