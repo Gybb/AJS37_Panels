@@ -44,7 +44,7 @@ void onajs37DestIndicatorDataVChange(char* newValue) {
       myGLCD.print(newValue, 12, 18);
     }
 }
-DcsBios::StringBuffer<1> ajs37DestIndicatorDataVBuffer(0x46a8, onajs37DestIndicatorDataVChange);
+DcsBios::StringBuffer<1> ajs37DestIndicatorDataVBuffer(0x46c6, onajs37DestIndicatorDataVChange);
 
 //Right_Indicator
 void onajs37DestIndicatorDataHChange(char* newValue) {
@@ -52,7 +52,7 @@ void onajs37DestIndicatorDataHChange(char* newValue) {
     myGLCD.setColor(245, 195, 80);
     myGLCD.print(newValue, 95, 18);
 }
-DcsBios::StringBuffer<1> ajs37DestIndicatorDataHBuffer(0x46aa, onajs37DestIndicatorDataHChange);
+DcsBios::StringBuffer<1> ajs37DestIndicatorDataHBuffer(0x46c8, onajs37DestIndicatorDataHChange);
 
 
 void loop()
