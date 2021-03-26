@@ -36,6 +36,10 @@ DcsBios::Potentiometer panelLights("PANEL_LIGHTS", A7);
 //RENFLYGN DOES NOT WORK, DONT KNOW WHY, STRANGE SYNTAX IN CLICKABLE.LUA
 //*******************  SLUT STARTPANEL  ***********************/
 
+//-----------Check switch states polls-------------------
+unsigned int g_iInitIntervalCounter = 0;
+unsigned int g_iForcePollCycles = 10;
+
 void setup() {
   DcsBios::setup();
 
@@ -76,4 +80,23 @@ DcsBios::IntegerBuffer startSolBuffer(0x4606, 0x0100, 8, onStartSolChange);
 
 void loop() {
     DcsBios::loop();
+     if ( g_iForcePollCycles > 0 )
+    { 
+        //repeat poll for this many cycles
+        if ( ++g_iInitIntervalCounter == 0 ) 
+        {  PollAllControls();     //main loop 1->65535->0 then polls
+           g_iForcePollCycles--;
+        }
+
+    }
+
+}
+
+void PollAllControls()
+{
+    mainElectricPower.pollInputCurrent();
+    lowPresFuelValve.pollInputCurrent();
+    ignitionSystem.pollInputCurrent();
+    generator.pollInputCurrent();
+    startSystem.pollInputCurrent();
 }
