@@ -24,6 +24,9 @@ DcsBios::AnalogMultiPos masterModeSelect("MASTER_MODE_SELECT", A7, 6, (1023/6));
 DcsBios::AnalogMultiPos antiJamMode("ANTI_JAM_MODE", A6, 7, (1023/7));
 
 //*******************  SLUT RADARPANEL  ***********************/
+//--------------Check switch states polls-----------
+unsigned int g_iInitIntervalCounter = 0;
+unsigned int g_iForcePollCycles = 10;
 
 void setup() {
   DcsBios::setup();
@@ -45,4 +48,23 @@ DcsBios::IntegerBuffer panelLightsBuffer(0x4678, 0xffff, 0, onPanelLightsChange)
 
 void loop() {
     DcsBios::loop();
+       if ( g_iForcePollCycles > 0 )
+    { 
+        //repeat poll for this many cycles
+        if ( ++g_iInitIntervalCounter == 0 ) 
+        {  PollAllControls();     //main loop 1->65535->0 then polls
+           g_iForcePollCycles--;
+        }
+
+    }
+
+}
+
+void PollAllControls()
+{
+    radarGain.pollInputCurrent();
+    radarPulseNormalShort.pollInputCurrent();
+    radarRecceOnOff.pollInputCurrent();
+    masterModeSelect.pollInputCurrent();
+    antiJamMode.pollInputCurrent();
  }
