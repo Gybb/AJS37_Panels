@@ -35,7 +35,10 @@ DcsBios::Switch2Pos dataInOut("DATA_IN_OUT", A2);
 //DcsBios::Switch2Pos rensaButtonCover("RENSA_BUTTON_COVER", A3);
 
 DcsBios::AnalogMultiPos datapanelSelector("DATAPANEL_SELECTOR", A7, 6, (1023/6));
-
+//***********************DATAPANEL SLUT*********************************
+//----------Check switch states --------------
+unsigned int g_iInitIntervalCounter = 0;
+unsigned int g_iForcePollCycles = 10;
 
 void setup() {
   
@@ -59,4 +62,20 @@ DcsBios::IntegerBuffer panelLightsBuffer(0x4678, 0xffff, 0, onPanelLightsChange)
 
 void loop() {
   DcsBios::loop();
+      if ( g_iForcePollCycles > 0 )
+    { 
+        //repeat poll for this many cycles
+        if ( ++g_iInitIntervalCounter == 0 ) 
+        {  PollAllControls();     //main loop 1->65535->0 then polls
+           g_iForcePollCycles--;
+        }
+
+    }
+
+}
+
+void PollAllControls()
+{
+    dataInOut.pollInputCurrent();
+    datapanelSelector.pollInputCurrent();
   }
