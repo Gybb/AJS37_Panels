@@ -53,7 +53,37 @@ void setup() {
   //display2.sendBuffer();
 DcsBios::setup();
 }
-
+//Check main power switch
+void onMainElectricPowerChange(unsigned int newValue) {
+ power_is_on = newValue;
+}
+DcsBios::IntegerBuffer mainElectricPowerBuffer(0x4606, 0x0010, 4, onMainElectricPowerChange);
+//Check CK LED
+void onVtVg1Change(unsigned int newValue) {
+    CK_LED_is_off = newValue;
+}
+DcsBios::IntegerBuffer vtVg1Buffer(0x4604, 0x0010, 4, onVtVg1Change);
+//Turn on/off displays
+void displayPower(){
+  if (power_is_on && !CK_LED_is_off){
+          display1.setPowerSave(1);
+          display2.setPowerSave(1);
+          display1.clearBuffer();
+          display1.clear();
+          display2.clearBuffer();
+          display2.clear();
+  }
+       else{
+       display1.setPowerSave(0);
+       display2.setPowerSave(0);
+       display1.clearBuffer();
+       display1.clear();
+       display2.clearBuffer();
+       display2.clear();
+       }
+}
+//
+//*************Update Displays*************
 void onDatadisplay1to3Change(char* newValue) {
   display1.clearBuffer();  
   display1.drawStr(-10,45,newValue);
