@@ -46,9 +46,9 @@ void setup() {
   //font for displays
   display1.setFont(AJSDATA); 
   display2.setFont(AJSDATA);
-//draw 37 
-  display1.drawStr(-10,45," 37 ");
-  display1.sendBuffer();
+//draw 37 (For test purpose)
+  //display1.drawStr(-10,45," 37 ");
+  //display1.sendBuffer();
   //display2.drawStr(-10,55," 37");
   //display2.sendBuffer();
 DcsBios::setup();
