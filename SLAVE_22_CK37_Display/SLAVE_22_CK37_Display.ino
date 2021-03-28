@@ -53,19 +53,21 @@ void setup() {
   //display2.sendBuffer();
 DcsBios::setup();
 }
-//Check main power switch
+//********Check main power switch
 void onMainElectricPowerChange(unsigned int newValue) {
  power_is_on = newValue;
+  displayPower();
 }
 DcsBios::IntegerBuffer mainElectricPowerBuffer(0x4606, 0x0010, 4, onMainElectricPowerChange);
-//Check CK LED
+//********Check CK LED
 void onVtVg1Change(unsigned int newValue) {
-    CK_LED_is_off = newValue;
+    CK_LED_is_on = newValue;
+     displayPower();
 }
 DcsBios::IntegerBuffer vtVg1Buffer(0x4604, 0x0010, 4, onVtVg1Change);
-//Turn on/off displays
+//********Turn on/off displays
 void displayPower(){
-  if (power_is_on && !CK_LED_is_off){
+  if (!power_is_on || CK_LED_is_on){
           display1.setPowerSave(1);
           display2.setPowerSave(1);
           display1.clearBuffer();
@@ -74,12 +76,12 @@ void displayPower(){
           display2.clear();
   }
        else{
-       display1.setPowerSave(0);
-       display2.setPowerSave(0);
        display1.clearBuffer();
        display1.clear();
        display2.clearBuffer();
        display2.clear();
+       display1.setPowerSave(0);
+       display2.setPowerSave(0);
        }
 }
 //
