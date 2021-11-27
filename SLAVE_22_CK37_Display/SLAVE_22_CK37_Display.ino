@@ -4,10 +4,16 @@
 #include <Arduino.h>
 #include <U8g2lib.h>
 #include <SPI.h>
-//#define DCSBIOS_IRQ_SERIAL
+//
 #define DCSBIOS_RS485_SLAVE 22
 #define TXENABLE_PIN 2
 #include "DcsBios.h"
+
+int power_is_on = 0;
+int CK_LED_ison = 0;
+int lastCKcheck = 0;
+int lastPowerCheck = 0;
+
 U8G2_SH1106_128X64_NONAME_F_4W_HW_SPI display1(U8G2_R0,/* cs=*/ 7, /* dc=*/ 6, /* reset=*/ 4);
 U8G2_SH1106_128X64_NONAME_F_4W_HW_SPI display2(U8G2_R0,/* cs=*/ 5, /* dc=*/ 6, /* reset=*/ 8);
 /*
@@ -56,7 +62,10 @@ DcsBios::setup();
 //********Check main power switch
 void onMainElectricPowerChange(unsigned int newValue) {
  power_is_on = newValue;
-  displayPower();
+    if(power_is_on != lastPowerCheck){
+      displayPower();
+     }
+   lastPowerCheck = power_is_on;
 }
 DcsBios::IntegerBuffer mainElectricPowerBuffer(0x4606, 0x0010, 4, onMainElectricPowerChange);
 //********Check CK LED
@@ -65,17 +74,26 @@ void onVtVg1Change(unsigned int newValue) {
      displayPower();
 }
 DcsBios::IntegerBuffer vtVg1Buffer(0x4604, 0x0010, 4, onVtVg1Change);
+//Check CK LED
+void onVtVg1Change(unsigned int newValue) {
+    CK_LED_is_on = newValue;
+      if(CK_LED_is_on != lastCKcheck){
+        displayPower();
+   }
+     lastCKcheck  = CK_LED_is_on;
+}
+DcsBios::IntegerBuffer vtVg1Buffer(0x4604, 0x0010, 4, onVtVg1Change);
 //********Turn on/off displays
 void displayPower(){
-  if (!power_is_on || CK_LED_is_on){
+  if ((power_is_on == 0) || (CK_LED_is_on == 1)){
           display1.setPowerSave(1);
           display2.setPowerSave(1);
           display1.clearBuffer();
           display1.clear();
           display2.clearBuffer();
           display2.clear();
-  }
-       else{
+           }
+       else if ((power_is_on == 1) && (CK_LED_is_on == 0)){
        display1.clearBuffer();
        display1.clear();
        display2.clearBuffer();
