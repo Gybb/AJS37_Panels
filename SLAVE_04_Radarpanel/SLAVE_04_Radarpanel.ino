@@ -1,50 +1,41 @@
-#define DCSBIOS_RS485_SLAVE 23
+#define DCSBIOS_RS485_SLAVE 4
 #define TXENABLE_PIN 2
-
 #include "DcsBios.h"
-//******************* NAVPANEL ******************************
-DcsBios::Switch2Pos dmeSelector("DME_SELECTOR", 13);
 
-DcsBios::Switch2Pos radarAltimeterPower("RADAR_ALTIMETER_POWER", 12);
-
-DcsBios::Switch2Pos navSelectBtnB1("NAV_SELECT_BTN_B1", 11);
-
-DcsBios::Switch2Pos navSelectBtnB2("NAV_SELECT_BTN_B2", 10);
-
-DcsBios::Switch2Pos navSelectBtnB3("NAV_SELECT_BTN_B3", 9);
-
-DcsBios::Switch2Pos navSelectBtnB4("NAV_SELECT_BTN_B4", 8);
-
-DcsBios::Switch2Pos navSelectBtnB5("NAV_SELECT_BTN_B5", 7);
-
-DcsBios::Switch2Pos navSelectBtnB6("NAV_SELECT_BTN_B6", 6);
-
+//*******************  RADARPANEL  ****************************/
+//*******************  PANELKORT   ****************************/
+/*LAND/SJÖ på pin 8*/
+DcsBios::Switch2Pos dopplerLandSeaMode("DOPPLER_LAND_SEA_MODE", 8);
+//Need more coding, LAND/SJÖ does not work as a toggle switch in DCS
+/*RR TILL på pin 7*(Tvekamt om denna fungerar alls)/
+DcsBios::Switch2Pos radarMaintenanceTest("RADAR_MAINTENANCE_TEST", 7);
+/*LIN/LOG på pin 6*/
+DcsBios::Switch2Pos radarGain("RADAR_GAIN", 6);
 // PIN 5 for PWM LED
 int PanelLight_pin = 5;
+/*PULS NORMAL/KORT på pin 4*/
+DcsBios::Switch2Pos radarPulseNormalShort("RADAR_PULSE_NORMAL_SHORT", 4);
+/*PASSIV SPAN TILL/FRÅN på pin 3*/
+DcsBios::Switch2Pos radarRecceOnOff("RADAR_RECCE_ON_OFF", 3);
+/*SKEDESVÄLJARE på pin A7*/
+DcsBios::AnalogMultiPos masterModeSelect("MASTER_MODE_SELECT", A7, 6, (1023/6));
+/*AS vridomkopplare på pin A6*/
+DcsBios::AnalogMultiPos antiJamMode("ANTI_JAM_MODE", A6, 7, (1023/7));
 
-DcsBios::Switch2Pos navSelectBtnB7("NAV_SELECT_BTN_B7", 4);
-
-DcsBios::Switch2Pos navSelectBtnB8("NAV_SELECT_BTN_B8", 3);
-
-DcsBios::Switch2Pos navSelectBtnB9("NAV_SELECT_BTN_B9", A0);
-
-DcsBios::Switch2Pos navSelectBtnBx("NAV_SELECT_BTN_BX", A1);
-
-DcsBios::Switch2Pos navSelectBtnLMal("NAV_SELECT_BTN_L_MAL", A2);
-
-DcsBios::Switch2Pos navSelectBtnLs("NAV_SELECT_BTN_LS", A3);
-
-DcsBios::AnalogMultiPos tilsChannelSelect("TILS_CHANNEL_SELECT", A7, 11, (1023/11));
-//******************* NAVPANEL SLUT ******************************
-//----------Check switch states polls-----------------
+//*******************  SLUT RADARPANEL  ***********************/
+//---------- Check switch states --------------
 unsigned int g_iInitIntervalCounter = 0;
-unsigned int g_iForcePollCycles = 10;
+unsigned int g_iForcePollCycles = 2;
+//
 void PollAllControls()
 {
-    dmeSelector.pollInputCurrent();
-    radarAltimeterPower.pollInputCurrent();
-    tilsChannelSelect.pollInputCurrent();
-  }
+    //dopplerLandSeaMode.pollInputCurrent(); Doesnt matter
+    radarGain.pollInputCurrent();
+    radarPulseNormalShort.pollInputCurrent();
+    radarRecceOnOff.pollInputCurrent();
+    masterModeSelect.pollInputCurrent();
+    antiJamMode.pollInputCurrent();
+ }
 
 //---------------- Panelbelysning ------------------------------------------------------
 bool PanelLed_Power;
@@ -85,7 +76,7 @@ void loop() {
      if ( g_iForcePollCycles > 0 )
     { 
         //repeat poll for this many cycles
-        if ( ++g_iInitIntervalCounter == 23 ) 
+        if ( ++g_iInitIntervalCounter == 4 ) 
         {  PollAllControls();     //main loop 1->65535->0 then polls
            g_iForcePollCycles--;
         }
